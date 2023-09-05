@@ -1,0 +1,12 @@
+{
+    "name": "aws-classic-ts-ec2",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^16"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^6.0.3",
+        "@pulumi/awsx": "^1.0.5",
+        "@pulumi/pulumi": "^3.80.0"
+    }
+}
