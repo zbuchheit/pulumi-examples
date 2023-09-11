@@ -1,0 +1,8 @@
+config:
+  zbuchheit-learn:backendPort: "3000"
+  zbuchheit-learn:database: cart
+  zbuchheit-learn:frontendPort: "3001"
+  zbuchheit-learn:mongoHost: mongodb://mongo:27017
+  zbuchheit-learn:mongoPort: "27017"
+  zbuchheit-learn:nodeEnvironment: development
+  zbuchheit-learn:protocol: http://
