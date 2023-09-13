@@ -1,0 +1,21 @@
+{
+  "name": "time",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node ./bin/index.js"
+  },
+  "keywords": [],
+  "author": "zbuchheit <zbuchheit@pulumi.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.120",
+    "@types/node": "^20.6.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

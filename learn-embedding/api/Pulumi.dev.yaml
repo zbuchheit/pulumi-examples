@@ -1,0 +1,3 @@
+config:
+  api-automation:request: timezone
+  aws:region: us-west-2
