@@ -1,5 +1,5 @@
 {
-    "name": "aws-classic-ts-k8s",
+    "name": "aws-ts-eks",
     "main": "index.ts",
     "devDependencies": {
         "@types/node": "^16"

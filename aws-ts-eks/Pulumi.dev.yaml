@@ -1,6 +1,0 @@
-config:
-  aws-ts-k8s-cluster:desiredClusterSize: "3"
-  aws-ts-k8s-cluster:maxClusterSize: "6"
-  aws-ts-k8s-cluster:minClusterSize: "3"
-  aws-ts-k8s-cluster:vpcNetworkCidr: 10.0.0.0/16
-  aws:region: us-west-2
