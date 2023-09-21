@@ -1,0 +1,7 @@
+config:
+  aws-python-eks:desiredClusterSize: "3"
+  aws-python-eks:eksNodeInstanceType: t3.medium
+  aws-python-eks:maxClusterSize: "6"
+  aws-python-eks:minClusterSize: "3"
+  aws-python-eks:vpcNetworkCidr: 10.0.0.0/16
+  aws:region: us-west-2

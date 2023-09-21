@@ -1,0 +1,6 @@
+name: aws-python-eks
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: A Python program to deploy a Kubernetes cluster on AWS
