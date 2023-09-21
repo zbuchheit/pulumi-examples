@@ -1,0 +1,11 @@
+config:
+  learn-building:backendPort: "3000"
+  learn-building:database: cart
+  learn-building:frontendPort: "3001"
+  learn-building:mongoHost: mongo
+  learn-building:mongoPassword:
+    secure: AAABALusd8Bixq3ttANEpFZFOyRHRS/m4n/sI644h23NdMz5XDk=
+  learn-building:mongoPort: "27017"
+  learn-building:mongoUsername: admin
+  learn-building:nodeEnvironment: development
+  learn-building:protocol: http://

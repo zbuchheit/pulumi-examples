@@ -1,0 +1,8 @@
+config:
+  learn-building:backendPort: "3000"
+  learn-building:database: cart
+  learn-building:frontendPort: "3002"
+  learn-building:mongoHost: mongodb://mongo:27017
+  learn-building:mongoPort: "27017"
+  learn-building:nodeEnvironment: development
+  learn-building:protocol: http://
