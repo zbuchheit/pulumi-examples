@@ -1,0 +1,3 @@
+name: cosmos-db-role-assignment
+runtime: dotnet
+description: A minimal Azure Native C# Pulumi program
