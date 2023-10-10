@@ -30,7 +30,7 @@ const pdUsersData = [{
 
 //Create PagerDuty Users
 const pdUsers = pdUsersData.map((user, index) => {
-        return new pd.User(`user${index+1}`, user);
+        return new pd.User(`user-${index+1}`, user);
     });
 
 const pdTeamsData = [{
@@ -47,13 +47,13 @@ const pdTeamsData = [{
     members: [pdUsers[4], pdUsers[5]],
 }]
 const pdTeams = pdTeamsData.map((team, index) => {
-    return {team: new pd.Team(`team${index}`, team), members: team.members};
+    return {team: new pd.Team(`team-${index}`, team), members: team.members};
 });
 
 pdTeams.forEach((team, indexTeam) => {
     team.members.forEach((user, indexUser) => {
         user.role.apply(role => {
-        new pd.TeamMembership(`teamMembership${indexTeam}-${indexUser}`, {
+        new pd.TeamMembership(`teamMembership-team-${indexTeam+1}-user-${indexUser+1}`, {
             teamId: team.team.id,
             userId: user.id,
             role: role === "admin" ? "manager": "responder",
@@ -71,24 +71,26 @@ const schedule = new pd.Schedule("schedule", {
         start: "2021-01-01T00:00:00Z",
         rotationVirtualStart: "2021-01-01T00:00:00Z",
         rotationTurnLengthSeconds: 604800, // 1 week in seconds
-        users: [pdUsers[0].id,pdUsers[1].id]
+        users: [pdUsers[2].id,pdUsers[3].id] // User Three and User Four (note: this will also add them to Team 1 via the escalation policy)
     }],
 });
 /*
 Below results in unexpected behvaior in my opinion. 
-User 3 and 4 are not members of Team 1, but when added to the escalation policy and the escalation policy is applied, 
-they are added to Team 1. In order to remedy this, you can either add the user to the team with the explicit membership you expect,
-or create separate schedule and escalation policies per team.
+User 3, 4, 5, and 6 are not members of Team 1, 
+but when added to the escalation policy and the escalation policy is applied, 
+they are added to Team 1 as managers. In order to remedy this,
+you can either add the user to the team with the explicit membership you expect,
+or create separate schedules and escalation policies per team.
  */
 new pd.EscalationPolicy("escalation-policy", {
     name: "My Important Escalation Policy",
     rules: [{
         escalationDelayInMinutes: 30,
         targets: [{
-            id: pdUsers[2].id, // User Three
+            id: pdUsers[4].id, // User Five
             type: "user_reference",
         }, {
-            id: pdUsers[3].id, // User Four
+            id: pdUsers[5].id, // User Six
             type: "user_reference"
         }, {
             id: schedule.id,
