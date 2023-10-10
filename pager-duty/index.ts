@@ -65,7 +65,7 @@ pdTeams.forEach((team, indexTeam) => {
 const schedule = new pd.Schedule("schedule", {
     name: "My Important Schedule",
     description: "My Important Schedule",
-    timeZone: "UTC",
+    timeZone: "Etc/UTC",
     layers: [{
         name: "My Important Schedule Layer",
         start: "2021-01-01T00:00:00Z",

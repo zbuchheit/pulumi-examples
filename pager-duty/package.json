@@ -5,7 +5,7 @@
         "@types/node": "^16"
     },
     "dependencies": {
-        "@pulumi/pagerduty": "3.10.0",
+        "@pulumi/pagerduty": "4.0.0",
         "@pulumi/pulumi": "^3.0.0"
     }
 }
