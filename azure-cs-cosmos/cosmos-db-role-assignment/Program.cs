@@ -27,8 +27,6 @@ return await Pulumi.Deployment.RunAsync(async () =>
         ResourceGroupName = resourceGroupName 
     }).PrincipalId;
     
-    var subscriptionId = Output.Create(Pulumi.AzureNative.Authorization.GetClientConfig.InvokeAsync()).Apply(c => c.SubscriptionId);
-
     var userAssignedIdentityPrincipalId = userAssignedIdentity.Apply(async principalId =>
     {
 
