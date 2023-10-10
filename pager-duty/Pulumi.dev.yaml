@@ -1,0 +1,3 @@
+config:
+  pagerduty:token:
+    secure: AAABAL5B7nNjITgj77gGAeA1ZGHkSLDjeqAHuTWkzEiLdTDIj2HjBdTRoK/ilgyPNn2ryg==

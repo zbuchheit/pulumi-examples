@@ -1,0 +1,3 @@
+name: pager-duty
+runtime: nodejs
+description: A minimal TypeScript Pulumi program
