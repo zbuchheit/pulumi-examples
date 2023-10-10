@@ -12,7 +12,7 @@ return await Pulumi.Deployment.RunAsync(async () =>
     const int ExponentialBackoffFactor = 2;
     const string CosmosDbBuiltInDataContributorId = "00000000-0000-0000-0000-000000000002";
 
-    var stackReference = new StackReference("zbuchheit-pulumi-corp/cosmos-db-stack-reference/zbuchheit");
+    var stackReference = new StackReference($"{Deployment.Instance.OrganizationName}/cosmos-stack-reference/{Deployment.Instance.StackName}");
 
     var resourceGroupName = stackReference.RequireOutput("resourceGroupName").Apply(id => (string)id);
 
