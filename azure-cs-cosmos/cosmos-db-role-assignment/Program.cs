@@ -33,37 +33,37 @@ return await Pulumi.Deployment.RunAsync(async () =>
     until the PrincipalId is populated by reference AD. It would be preferable to be able to use the PrincipalId property of the UserAssignedIdentity resource as
     it only requires an api call to the Resource Manager API. The workaround requires an additional call to the AD API to get the Service Principal.
     */
-    var userAssignedIdentityPrincipalId = userAssignedIdentity.Apply(async principalId =>
-    {
+    // var userAssignedIdentityPrincipalId = userAssignedIdentity.Apply(async principalId =>
+    // {
 
-        GetServicePrincipalResult? servicePrincipalResult = null;
-        for (int attempt = 1; attempt <= MaximumRetries; attempt++)
-        {
-            try
-            {
-                servicePrincipalResult = await GetServicePrincipal.InvokeAsync(new GetServicePrincipalArgs
-                {
-                    ObjectId = principalId
-                });
-                Pulumi.Log.Debug($"Attempt {attempt} succeeded in fetching Service Principal.");
-                return servicePrincipalResult;
-            }
-            catch (Exception e)
-            {
-                Pulumi.Log.Debug($"Attempt {attempt} failed to fetch Service Principal.");
+    //     GetServicePrincipalResult? servicePrincipalResult = null;
+    //     for (int attempt = 1; attempt <= MaximumRetries; attempt++)
+    //     {
+    //         try
+    //         {
+    //             servicePrincipalResult = await GetServicePrincipal.InvokeAsync(new GetServicePrincipalArgs
+    //             {
+    //                 ObjectId = principalId
+    //             });
+    //             Pulumi.Log.Debug($"Attempt {attempt} succeeded in fetching Service Principal.");
+    //             return servicePrincipalResult;
+    //         }
+    //         catch (Exception e)
+    //         {
+    //             Pulumi.Log.Debug($"Attempt {attempt} failed to fetch Service Principal.");
 
-                if (attempt == MaximumRetries)
-                {
-                    Pulumi.Log.Error($"Service Principal not resolved after {attempt} tries. Exception: {e.Message}");
-                    throw;
-                }
-                int delay = initialDelayMilliseconds * (int)Math.Pow(ExponentialBackoffFactor, attempt);
-                Pulumi.Log.Debug($"Waiting for {delay}ms before retrying.");
-                await Task.Delay(delay);
-            }
-        }
-        return servicePrincipalResult;
-    });
+    //             if (attempt == MaximumRetries)
+    //             {
+    //                 Pulumi.Log.Error($"Service Principal not resolved after {attempt} tries. Exception: {e.Message}");
+    //                 throw;
+    //             }
+    //             int delay = initialDelayMilliseconds * (int)Math.Pow(ExponentialBackoffFactor, attempt);
+    //             Pulumi.Log.Debug($"Waiting for {delay}ms before retrying.");
+    //             await Task.Delay(delay);
+    //         }
+    //     }
+    //     return servicePrincipalResult;
+    // });
 
     var cosmosDBDataContributorRoleDefinition = GetSqlResourceSqlRoleDefinition.Invoke(new GetSqlResourceSqlRoleDefinitionInvokeArgs
     {
@@ -75,7 +75,7 @@ return await Pulumi.Deployment.RunAsync(async () =>
     var sqlResourceSqlRoleAssignment = new SqlResourceSqlRoleAssignment($"sql-resource-sql-role-assignment", new SqlResourceSqlRoleAssignmentArgs
     {
         AccountName = cosmosAccount.Apply(account => account.Name),
-        PrincipalId = userAssignedIdentityPrincipalId.Apply(principalId => principalId.ObjectId),
+        PrincipalId = userAssignedIdentity,
         ResourceGroupName = resourceGroupName,
         RoleAssignmentId = new Pulumi.Random.RandomUuid("testRandomUuid").Result,
         RoleDefinitionId = cosmosDBDataContributorRoleDefinition,
