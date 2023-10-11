@@ -6,7 +6,7 @@ using ManagedIdentity = Pulumi.AzureNative.ManagedIdentity;
 using Pulumi.AzureNative.DocumentDB;
 
 return await Pulumi.Deployment.RunAsync(async () =>
-{
+{ 
     const int initialDelayMilliseconds = 500;
     const int MaximumRetries = 10;
     const int ExponentialBackoffFactor = 2;
@@ -26,7 +26,13 @@ return await Pulumi.Deployment.RunAsync(async () =>
     { 
         ResourceGroupName = resourceGroupName 
     }).PrincipalId;
-    
+
+    /*
+    The following code is a workaround for a bug in the Azure SDK. The bug is that the PrincipalId property of the UserAssignedIdentity resource is not populated
+    when the resource is created. This is a problem because we need the PrincipalId to assign the role to the identity. The workaround is to poll the resource
+    until the PrincipalId is populated by reference AD. It would be preferable to be able to use the PrincipalId property of the UserAssignedIdentity resource as
+    it only requires an api call to the Resource Manager API. The workaround requires an additional call to the AD API to get the Service Principal.
+    */
     var userAssignedIdentityPrincipalId = userAssignedIdentity.Apply(async principalId =>
     {
 
@@ -69,7 +75,7 @@ return await Pulumi.Deployment.RunAsync(async () =>
     var sqlResourceSqlRoleAssignment = new SqlResourceSqlRoleAssignment($"sql-resource-sql-role-assignment", new SqlResourceSqlRoleAssignmentArgs
     {
         AccountName = cosmosAccount.Apply(account => account.Name),
-        PrincipalId = userAssignedIdentityPrincipalId.Apply(principalId => principalId!.ObjectId),
+        PrincipalId = userAssignedIdentityPrincipalId.Apply(principalId => principalId.ObjectId),
         ResourceGroupName = resourceGroupName,
         RoleAssignmentId = new Pulumi.Random.RandomUuid("testRandomUuid").Result,
         RoleDefinitionId = cosmosDBDataContributorRoleDefinition,
