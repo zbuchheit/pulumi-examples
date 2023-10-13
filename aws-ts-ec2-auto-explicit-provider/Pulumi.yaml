@@ -1,0 +1,3 @@
+name: aws-ts-ec2-auto-explicit-provider
+runtime: nodejs
+description: A minimal TypeScript Pulumi program
