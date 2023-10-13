@@ -1,0 +1,6 @@
+name: aws-python-ec2-auto-explicit-provider
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: A minimal AWS Python Pulumi program
