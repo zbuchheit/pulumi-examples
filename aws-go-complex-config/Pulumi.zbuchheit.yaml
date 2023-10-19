@@ -10,9 +10,14 @@ config:
       compress: true
       defaultTtl: 300.0
       fieldLevelEncryptionId: "field-level-encryption-id"
-      forwardedValues:
-        headers:
-          - "Accept-Encoding"
+      # forwardedValues:
+      #   cookies:
+      #     forward: "none"
+      #     whitelistedNames:
+      #       - "cookie1"
+      #       - "cookie2"
+      #   headers:
+      #     - "Accept-Encoding"
       functionAssociations:
         - functionARN: "arn:aws:lambda:us-west-2:dummyValue"
           eventType: "viewer-request"
