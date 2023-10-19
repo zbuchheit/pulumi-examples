@@ -1,0 +1,41 @@
+config:
+  aws-go-cloudfront-config:distribution:
+    defaultCacheBehavior:
+      allowedMethods:
+        - "GET"
+        - "POST"
+      cachePolicyId: "some-cache-policy-id"
+      cachedMethods:
+        - "GET"
+      compress: true
+      defaultTtl: 300.0
+      fieldLevelEncryptionId: "field-level-encryption-id"
+      # forwardedValues:
+      #   cookies:
+      #     forward: "none"
+      #     whitelistedNames:
+      #       - "cookie1"
+      #       - "cookie2"
+      #   headers:
+      #     - "Accept-Encoding"
+      functionAssociations:
+        - functionARN: "arn:aws:lambda:us-west-2:dummyValue"
+          eventType: "viewer-request"
+      lambdaFunctionAssociations:
+        - lambdaFunctionARN: "arn:aws:lambda:us-west-2:dummyValue"
+          eventType: "origin-request"
+      maxTtl: 3600.0
+      minTtl: 60.0
+      originRequestPolicyId: "origin-request-policy-id"
+      realtimeLogConfigArn: "some-log-config-arn"
+      responseHeadersPolicyId: "response-headers-policy-id"
+      smoothStreaming: false
+      targetOriginId: "some-target-origin-id"
+      trustedKeyGroups:
+        - "trusted-key-group-1"
+        - "trusted-key-group-2"
+      trustedSigners:
+        - "signer1"
+        - "signer2"
+      viewerProtocolPolicy: "https-only"
+    aws-native:region: us-west-2

@@ -1,0 +1,3 @@
+name: aws-go-cloudfront-config
+runtime: go
+description: A minimal AWS Go Pulumi program
