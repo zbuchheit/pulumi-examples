@@ -1,0 +1,5 @@
+# path: testChart/Chart.yaml
+apiVersion: v2
+name: my-basic-chart
+description: A basic Helm chart for testing semverCompare
+version: 0.1.0

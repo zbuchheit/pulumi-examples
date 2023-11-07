@@ -1,0 +1,27 @@
+{{ if semverCompare ">=1.21.0-0" .Capabilities.KubeVersion.Version }}
+apiVersion: apps/v1
+{{ else }}
+apiVersion: apps/v1beta2
+{{ end }}
+kind: Deployment
+metadata:
+  name: my-basic-deployment
+  labels:
+    app: my-basic-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-basic-app
+  template:
+    metadata:
+      labels:
+        app: my-basic-app
+        helmVersionGreaterThan21:  {{- if semverCompare ">=1.21.0-0" .Capabilities.KubeVersion.Version }} "greaterOrEqualTo-1.21.0" {{- else }} "below-1.21.0" {{- end }}
+        helmVersionEval: {{.Capabilities.KubeVersion.Version}}
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
