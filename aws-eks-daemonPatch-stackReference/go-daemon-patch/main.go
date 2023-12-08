@@ -15,7 +15,7 @@ func main() {
 		// Get some configuration values or set default values
 		var stackRef *pulumi.StackReference
 
-		stackRef, err := pulumi.NewStackReference(ctx, "zbuchheit-pulumi-corp/aws-ts-eks/zbuchheit", nil)
+		stackRef, err := pulumi.NewStackReference(ctx, "zbuchheit-pulumi-corp/aws-ts-eks/dev", nil)
 		if err != nil {
 			return err
 		}
@@ -38,32 +38,22 @@ func main() {
 			return err
 		}
 
-		_, err = v1.NewDaemonSetPatch(ctx, "k8s-daemonset-patch", &v1.DaemonSetPatchArgs{
+		daemonSet, err := v1.NewDaemonSetPatch(ctx, "k8s-daemonset-patch", &v1.DaemonSetPatchArgs{
 					Metadata: metav1.ObjectMetaPatchArgs{
 						Name:      pulumi.String("kube-proxy"),
 						Namespace: pulumi.String("kube-system"),
 						Annotations: pulumi.StringMap{
-							// "pulumi.com/patchForce":        pulumi.String("true"),
+							"pulumi.com/patchForce":        pulumi.String("true"),
+							// "pulumi.com/patchFieldManager": pulumi.String("pulumi"),
 						},
 					},
 					Spec: v1.DaemonSetSpecPatchArgs{
 						Template: corev1.PodTemplateSpecPatchArgs{
-							Metadata: metav1.ObjectMetaPatchArgs{
-								Labels: pulumi.StringMap{
-									"k8s-app": pulumi.String("kube-proxy"),
-								},
-							},
 							Spec: corev1.PodSpecPatchArgs{
 								Containers: corev1.ContainerPatchArray{
 									corev1.ContainerPatchArgs{
 										Name:  pulumi.String("kube-proxy"),
-										Image: pulumi.String("602401143452.dkr.ecr.us-west-2.amazonaws.com/eks/kube-proxy:v1.24.17-minimal-eksbuild.2"), //update from 1.24.7
-										Command: pulumi.ToStringArray([]string{
-											"kube-proxy",
-											"--hostname-override=$(NODE_NAME)",
-											"--v=2",
-											"--config=/var/lib/kube-proxy-config/config",
-										}),
+										Image: pulumi.String("602401143452.dkr.ecr.us-west-2.amazonaws.com/eks/kube-proxy:v1.24.7-minimal-eksbuild.2"), //update from 1.24.7
 									},
 								},
 							},
@@ -75,6 +65,7 @@ func main() {
 		if err != nil {
 			return err
 		}
+		ctx.Export("DaemonSetName", daemonSet.Metadata.Name())
 		return nil
 	})
 }
