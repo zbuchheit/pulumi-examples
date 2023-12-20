@@ -33,7 +33,7 @@ const classicObject = new gcpClassic.storage.BucketObject('zbuchheit-classic-buc
 const myFunction = new googleNative.cloudfunctions.v2.Function("zbuchheit-function-1", {
     project: project,
     functionId: "zbuchheit-function-1",
-    name: 'projects/pulumi-ce-team/locations/us-west1/functions/zbuchheit-function-1', 
+    name: `projects/${project}/locations/us-west1/functions/zbuchheit-function-1`, 
     buildConfig: {
         entryPoint: "helloGET",
         runtime: "nodejs20",
@@ -48,7 +48,7 @@ const myFunction = new googleNative.cloudfunctions.v2.Function("zbuchheit-functi
 const myFunction2 = new googleNative.cloudfunctions.v2.Function("zbuchheit-function-2", {
     project: project,
     functionId: "zbuchheit-function-2",
-    name: 'projects/pulumi-ce-team/locations/us-west1/functions/zbuchheit-function-2', 
+    name: `projects/${project}/locations/us-west1/functions/zbuchheit-function-2`, 
     buildConfig: {
         entryPoint: "helloGET",
         runtime: "nodejs20",
